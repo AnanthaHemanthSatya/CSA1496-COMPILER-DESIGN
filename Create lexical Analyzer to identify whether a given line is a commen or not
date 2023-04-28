@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+    char input[100];
+    printf("Enter input: ");
+    fgets(input, 100, stdin);
+    input[strlen(input)-1] = '\0'; 
+
+    
+    if (strstr(input, "//") != NULL) {
+        printf("Input is a single-line comment.\n");
+    }
+
+   
+    else if (strstr(input, "/*") != NULL && strstr(input, "*/") != NULL) {
+        printf("Input is a multi-line comment.\n");
+    }
+
+   
+    else {
+        printf("Input is not a comment.\n");
+    }
+
+    return 0;
+}
