@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <ctype.h>
+
+// Function to check if a character is a valid letter or underscore
+int is_letter(char c) {
+    return isalpha(c) || c == '_';
+}
+
+// Function to check if a character is a valid digit
+int is_digit(char c) {
+    return isdigit(c);
+}
+
+// Function to check if a character is a valid operator
+int is_operator(char c) {
+    return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
+}
+
+int main() {
+    char input[100]; // input string
+    int i = 0; // index in the input string
+    char c; // current character in the input string
+
+    // Prompt the user to enter input
+    printf("Enter input: ");
+    fgets(input, 100, stdin);
+
+    // Loop through each character in the input string
+    while (input[i] != '\0') {
+        c = input[i];
+
+        // Check if the current character is an identifier
+        if (is_letter(c)) {
+            printf("Identifier: ");
+
+            // Loop through the rest of the characters in the identifier
+            while (is_letter(c) || is_digit(c)) {
+                printf("%c", c);
+                c = input[++i];
+            }
+
+            printf("\n");
+            continue;
+        }
+
+        // Check if the current character is a constant
+        if (is_digit(c)) {
+            printf("Constant: ");
+
+            // Loop through the rest of the digits in the constant
+            while (is_digit(c)) {
+                printf("%c", c);
+                c = input[++i];
+            }
+
+            printf("\n");
+            continue;
+        }
+
+        // Check if the current character is an operator
+        if (is_operator(c)) {
+            printf("Operator: %c\n", c);
+        }
+
+        i++;
+    }
+
+    return 0;
+}
