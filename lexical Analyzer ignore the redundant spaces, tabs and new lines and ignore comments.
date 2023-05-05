@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <ctype.h>
+
+#define MAX_LEN 1000 // Maximum length of the input string
+
+int main() {
+  char input[MAX_LEN]; // Input string
+  char c; // Current character
+  int i = 0; // Index for input array
+
+  printf("Enter the input string:\n");
+
+  // Read input string from user
+  while ((c = getchar()) != EOF) {
+    if (i >= MAX_LEN - 1) {
+      printf("Error: Input string too long.\n");
+      return 1;
+    }
+    input[i++] = c;
+  }
+
+  // Null-terminate the input string
+  input[i] = '\0';
+
+  // Process the input string
+  i = 0;
+  while (input[i] != '\0') {
+    // Ignore redundant spaces, tabs, and new lines
+    while (isspace(input[i])) {
+      i++;
+    }
+
+    // Ignore comments
+    if (input[i] == '/' && input[i + 1] == '/') {
+      while (input[i] != '\n') {
+        i++;
+      }
+    }
+
+    // Print the current token
+    if (isalpha(input[i])) {
+      printf("IDENTIFIER ");
+      while (isalnum(input[i])) {
+        putchar(input[i++]);
+      }
+      putchar('\n');
+    }
+    else if (isdigit(input[i])) {
+      printf("NUMBER ");
+      while (isdigit(input[i])) {
+        putchar(input[i++]);
+      }
+      putchar('\n');
+    }
+    else if (ispunct(input[i])) {
+      printf("PUNCTUATION %c\n", input[i++]);
+    }
+    else {
+      printf("ERROR: Invalid character '%c'\n", input[i++]);
+    }
+  }
+
+  return 0;
+}
