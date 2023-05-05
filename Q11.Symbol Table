@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_ENTRIES 100 // Maximum number of entries in symbol table
+#define MAX_NAME_LEN 20 // Maximum length of symbol names
+
+typedef struct {
+    char name[MAX_NAME_LEN]; // Symbol name
+    int value; // Symbol value
+} Entry;
+
+Entry symbol_table[MAX_ENTRIES]; // Array to store symbol table entries
+int num_entries = 0; // Number of entries in symbol table
+
+// Function to insert a new entry into the symbol table
+void insert_entry(char* name, int value) {
+    // Check if symbol table is full
+    if (num_entries >= MAX_ENTRIES) {
+        printf("Error: Symbol table is full\n");
+        return;
+    }
+    // Check if symbol with same name already exists
+    for (int i = 0; i < num_entries; i++) {
+        if (strcmp(symbol_table[i].name, name) == 0) {
+            printf("Error: Symbol with same name already exists\n");
+            return;
+        }
+    }
+    // Insert new entry into symbol table
+    Entry entry;
+    strncpy(entry.name, name, MAX_NAME_LEN);
+    entry.value = value;
+    symbol_table[num_entries++] = entry;
+    printf("Symbol '%s' inserted with value '%d'\n", name, value);
+}
+
+// Function to lookup a symbol in the symbol table
+int lookup_symbol(char* name) {
+    for (int i = 0; i < num_entries; i++) {
+        if (strcmp(symbol_table[i].name, name) == 0) {
+            return symbol_table[i].value;
+        }
+    }
+    printf("Error: Symbol '%s' not found\n", name);
+    return -1;
+}
+
+int main() {
+    // Insert some symbols into the symbol table
+    insert_entry("x", 10);
+    insert_entry("y", 20);
+    insert_entry("z", 30);
+    // Lookup some symbols in the symbol table
+    printf("Value of 'x': %d\n", lookup_symbol("x"));
+    printf("Value of 'y': %d\n", lookup_symbol("y"));
+    printf("Value of 'z': %d\n", lookup_symbol("z"));
+    printf("Value of 'a': %d\n", lookup_symbol("a"));
+    return 0;
+}
